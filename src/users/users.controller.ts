@@ -15,7 +15,7 @@ export class UsersController {
     schema:{
       type: 'object',
       properties:{
-        name:{
+        username:{
           type:'string',
           example: 'chinese', 
         },

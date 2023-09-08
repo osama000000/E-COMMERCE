@@ -12,8 +12,8 @@ export class LocalStrategy extends PassportStrategy(Strategy){
         super();
     }
 
-    validate(username: string, password:string):User{
-        const user:User =this.userService.getUserByName(username);
+    async validate(username: string, password:string):Promise<User>{
+        const user:User = await this.userService.findByUsername(username);
         if(user === undefined) throw new UnauthorizedException();
         if(user != undefined && user.password == password){
             return user;

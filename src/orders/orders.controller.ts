@@ -1,21 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+
 
 @ApiTags('Orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+
+  // @Post('/:orderId/add-product/:productId')
+  // async addProductToOrder(
+  //   @Param('orderId') orderId: string,
+   
+  // ) {
+  //   return this.ordersService.addProductToOrder(orderId, productId);
+  // }
   @Post()
   @ApiOperation({summary:'enter your details'})
   @ApiBody({
     schema:{
       type: 'object',
       properties:{
-        items:{
+        productId:{
           type:'string',
           example: 'chinese', 
         },
@@ -33,10 +42,15 @@ export class OrdersController {
       }
     }
   })
-  create(@Body() createOrderDto: CreateOrderDto) {
+  
+  create(@Body() createOrderDto: CreateOrderDto, ) {
+    
     return this.ordersService.create(createOrderDto);
   }
-
+  @Get('history')
+  async getOrderHistory(@Req() request: Request) {
+    return this.ordersService.findOrderHistoryForUser(); // No need to pass a user ID
+  }
   @Get()
   @ApiOperation({summary:'get all  your details'})
   findAll() {

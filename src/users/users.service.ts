@@ -4,42 +4,39 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './Schema/users';
 import { Model } from 'mongoose';
-
+import { CONSTANTS } from 'constant';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
 
-  public users: User[] = [
-    {
+  // public users: User[] = [
+  //   {
 
-      username: 'Osama',
-      password: 'admin',
-      email: 'abc@.com',
-
-      phone: '0342-232323',
-
-      address: 'i-10/2',
-      
+  //     username: 'admin',
+  //     password: '1234',
+  //     email: 'abc@.com',
+  //     phone: '0342-232323',
+  //     address: 'i-10/2',
+  //     role:CONSTANTS.ROLES.ADMIN
      
-    },
-    {
+  //   },
+  //   {
 
-      username: 'ali',
-      password: 'admin',
-      email: 'abc@.com',
-
-      phone: '0342-22433',
-
-      address: 'i-10/2',
-
+  //     username: 'user',
+  //     password: '123',
+  //     email: 'abc@.com',
+  //     phone: '0342-22433',
+  //     address: 'i-10/2',
+  //     role:CONSTANTS.ROLES.USER
    
 
-    },
+  //   },
 
-  ];
+  // ];
 
-  getUserByName(userName: string): User {
-    return this.users.find((user: User) => user.username === userName);
+  async findByUsername(username: string): Promise<User | null> {
+    return this.userModel.findOne({ username }).exec();
   }
 
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
@@ -50,7 +47,7 @@ export class UsersService {
     model.phone = createUserDto.phone;
     model.address = createUserDto.address;
     model.password = createUserDto.password;
-
+    
     return model.save();
   }
 

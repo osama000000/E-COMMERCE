@@ -8,14 +8,20 @@ export type OrderDocument = Order & Document;
 export class Order {
 
 
- 
-   
-    items: string; // Reference to Product model
+    @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Product' }] })
+
+   @Prop()
+    productId: string[]; 
     @Prop()
     deliveryCost: string;
     @Prop()
     total:string;
-
+    
+    // @Prop({ type: String, required: true })
+    // user: string; 
+  
+    @Prop({ type: Date, default: Date.now })
+    orderDate: Date;
 
 }
 

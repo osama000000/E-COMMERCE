@@ -2,7 +2,7 @@ export class CreateOrderDto {
 
     
 
-    items: string;
+    productId: string[];
     
     deliveryCost: string;
 

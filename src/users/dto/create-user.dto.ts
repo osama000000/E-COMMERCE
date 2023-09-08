@@ -9,5 +9,7 @@ export class CreateUserDto {
     address:string;
 
     password:string;
+
+    role:string;
   
 }
