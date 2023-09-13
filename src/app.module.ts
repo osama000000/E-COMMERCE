@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -19,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
       useFactory : (ConfigService)=> ({ uri: ConfigService.get("mongo_uri") }),
       inject: [ConfigService],
      }),
+
     UsersModule,
     ProductModule,
     OrdersModule,
@@ -26,4 +27,6 @@ import { AuthModule } from './auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+ 
+}
